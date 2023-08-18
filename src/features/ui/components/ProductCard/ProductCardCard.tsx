@@ -17,7 +17,7 @@ const ProductCardCard: React.FC<IProductCardProps> = ({
     <ProductCardContextProvider product={product}>
       <div
         className={cn(
-          "relative w-[220px] sm:w-[300px] p-1 bg-white hover:shadow-sm hover:bg-[#FAFAFA] duration-200 rounded",
+          "relative w-[220px] sm:w-[300px] p-1 bg-white rounded-sm pb-3",
           className
         )}
         {...rest}

@@ -25,21 +25,35 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-2 bg-white">
-      <Link to="/" className=" font-[600] p-1.5 text-[calc(20px+0.390625vw)]">
+    <header className="flex items-center justify-between px-5 py-3 bg-white sm:py-2 sm:justify-around">
+      <Link to="/" className=" font-[600] p-0.5 text-[calc(20px+0.390625vw)]">
         Fake Store
       </Link>
       {isUserLoggedIn ? (
         <MobileMenu handleLogout={handleLogout} />
       ) : (
-        <Link
-          to="/login"
-          className={cn(
-            "w-28 pl-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[600] flex items-center text-white bg-blue-800 justify-start "
-          )}
-        >
-          <LuLogIn className={cn("mr-2 text-[calc(12px+0.390625vw)]")} /> Login
-        </Link>
+        <div className="flex items-center space-x-2">
+          <Link
+            to="/cart"
+            className={cn(
+              "px-2 text-[calc(12px+0.390625vw)] rounded  font-[600] flex items-center justify-start hover:underline duration-300"
+            )}
+          >
+            <AiOutlineShoppingCart
+              className={cn("mr-1 text-[calc(12px+0.390625vw)]")}
+            />{" "}
+            My Cart
+          </Link>
+          <Link
+            to="/login"
+            className={cn(
+              "px-2 text-[calc(12px+0.390625vw)] rounded  font-[600] flex items-center justify-start hover:underline duration-300"
+            )}
+          >
+            <LuLogIn className={cn("mr-1 text-[calc(12px+0.390625vw)]")} />{" "}
+            Login
+          </Link>
+        </div>
       )}
     </header>
   );
@@ -52,7 +66,7 @@ interface IMobileMenuProps {
 function MobileMenu({ handleLogout }: IMobileMenuProps) {
   return (
     <div className="relative">
-      <Menu as="div" className={cn("fixed top-2 right-4  z-50")}>
+      <Menu as="div" className={cn("")}>
         <Menu.Button
           className={cn(
             "flex rounded px-6 py-1.5 duration-200  text-gray-700 justify-center"
@@ -63,7 +77,7 @@ function MobileMenu({ handleLogout }: IMobileMenuProps) {
         </Menu.Button>
         <Menu.Items
           className={cn(
-            "flex flex-col fixed w-56 right-[16px] top-[70px] bg-[#FFFFFF]  p-2  space-y-1.5 rounded shadow"
+            "flex flex-col fixed w-56 right-[16px] top-[70px] bg-[#FFFFFF]  p-2  space-y-1.5 rounded shadow z-50"
           )}
         >
           <Menu.Item>

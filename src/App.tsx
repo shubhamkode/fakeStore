@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { CartPage, HomePage, LoginPage, ProductInfoPage } from "@/ui/pages";
 import { Page } from "@/ui/components";
+import { Provider as WrapBalancerProvider } from "react-wrap-balancer";
 
 import {
   useGetAllCategoriesQuery,
@@ -13,14 +14,16 @@ function App() {
   useGetAllProductsQuery(null);
 
   return (
-    <Page>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/product/:id" element={<ProductInfoPage />} />
-        <Route path="/cart" element={<CartPage />} />
-      </Routes>
-    </Page>
+    <WrapBalancerProvider>
+      <Page>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/product/:id" element={<ProductInfoPage />} />
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </Page>
+    </WrapBalancerProvider>
   );
 }
 

@@ -46,19 +46,18 @@ const HomePageTemplate: React.FC<IHomePageTemplate> = ({
             />
             <Link to={`/product/${product.id}`}>
               <ProductCard.Image />
-              <ProductCard.Info>
+              <div className="pl-2">
                 <ProductCard.Title />
                 <ProductCard.Ratings />
-              </ProductCard.Info>
+                <ProductCard.Price />
+              </div>
             </Link>
-            <div className="flex items-center justify-between px-2 py-1 mt-auto">
-              <ProductCard.Price />
-              <ProductCard.Button
-                onClick={() => {
-                  dispatch(addProductToCart(product.id));
-                }}
-              />
-            </div>
+            <button
+              className="text-gray-500 capitalize text-[calc(10px+0.39vw)] sm:text-[calc(7px+0.39vw)] opacity-60 px-3 py-0.5 font-[700] bg-slate-100 w-min whitespace-nowrap rounded-full mt-2"
+              onClick={() => dispatch(updateCategory(product.category))}
+            >
+              {product.category}
+            </button>
           </ProductCard.Card>
         ))}
       </div>
