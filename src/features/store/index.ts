@@ -5,12 +5,17 @@ import categorySlice from "./categorySlice";
 import productSlice from "./productSlice";
 import authSlice from "./authSlice";
 
+import wishListSlice from "./wishListSlice";
+import cartSlice from "./cartSlice";
+
 const store = configureStore({
   reducer: {
     [storeApi.reducerPath]: storeApi.reducer,
     category: categorySlice,
     products: productSlice,
     [authSlice.name]: authSlice.reducer,
+    [cartSlice.name]: cartSlice.reducer,
+    [wishListSlice.name]: wishListSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(storeApi.middleware),

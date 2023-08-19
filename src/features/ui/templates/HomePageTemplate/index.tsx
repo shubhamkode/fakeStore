@@ -4,7 +4,6 @@ import { cn } from "tailwind-cn";
 
 import { Category } from "@/models/Category";
 import {
-  addProductToCart,
   addProductToWishList,
   removeProductFromWishList,
 } from "@/store/productSlice";
@@ -12,6 +11,7 @@ import { updateCategory } from "@/store/categorySlice";
 import { Product } from "@/models/Product";
 import { ProductCard } from "@/ui/components";
 import { Link } from "react-router-dom";
+
 
 interface IHomePageTemplate {
   products: Product[];
@@ -52,12 +52,14 @@ const HomePageTemplate: React.FC<IHomePageTemplate> = ({
                 <ProductCard.Price />
               </div>
             </Link>
-            <button
-              className="text-gray-500 capitalize text-[calc(10px+0.39vw)] sm:text-[calc(7px+0.39vw)] opacity-60 px-3 py-0.5 font-[700] bg-slate-100 w-min whitespace-nowrap rounded-full mt-2"
-              onClick={() => dispatch(updateCategory(product.category))}
-            >
-              {product.category}
-            </button>
+            <div className="flex justify-end px-2 py-2">
+              <button
+                className="text-gray-500 capitalize text-xs opacity-60 px-3 py-0.5 font-[700] bg-slate-100  whitespace-nowrap rounded-full"
+                onClick={() => dispatch(updateCategory(product.category))}
+              >
+                {product.category}
+              </button>
+            </div>
           </ProductCard.Card>
         ))}
       </div>

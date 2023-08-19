@@ -5,7 +5,7 @@ import { logout } from "@/store/authSlice";
 import { resetCart } from "@/store/productSlice";
 import { resetCategory } from "@/store/categorySlice";
 
-import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { cn } from "tailwind-cn";
 import { LuLogOut, LuLogIn } from "react-icons/lu";
 
@@ -25,109 +25,123 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between px-5 py-3 bg-white sm:py-2 sm:justify-around">
+    <header className="flex items-center justify-between px-5 py-3 bg-white ">
       <Link to="/" className=" font-[600] p-0.5 text-[calc(20px+0.390625vw)]">
-        Fake Store
+        FakeStore
       </Link>
-      {isUserLoggedIn ? (
-        <MobileMenu handleLogout={handleLogout} />
-      ) : (
-        <div className="flex items-center space-x-2">
-          <Link
-            to="/cart"
-            className={cn(
-              "px-2 text-[calc(12px+0.390625vw)] rounded  font-[600] flex items-center justify-start hover:underline duration-300"
-            )}
-          >
-            <AiOutlineShoppingCart
-              className={cn("mr-1 text-[calc(12px+0.390625vw)]")}
-            />{" "}
-            My Cart
-          </Link>
-          <Link
-            to="/login"
-            className={cn(
-              "px-2 text-[calc(12px+0.390625vw)] rounded  font-[600] flex items-center justify-start hover:underline duration-300"
-            )}
-          >
-            <LuLogIn className={cn("mr-1 text-[calc(12px+0.390625vw)]")} />{" "}
-            Login
-          </Link>
-        </div>
-      )}
+      <div className="flex items-center px-2 space-x-2">
+        <Link to="/cart" className="p-1.5">
+          <AiOutlineShoppingCart className="text-2xl " />
+        </Link>
+        <MobileMenu
+          handleLogout={handleLogout}
+          isUserLoggedIn={isUserLoggedIn}
+        />
+      </div>
     </header>
   );
 }
 
 interface IMobileMenuProps {
+  isUserLoggedIn: boolean;
   handleLogout: () => void;
 }
 
-function MobileMenu({ handleLogout }: IMobileMenuProps) {
+function MobileMenu({ handleLogout, isUserLoggedIn }: IMobileMenuProps) {
   return (
     <div className="relative">
       <Menu as="div" className={cn("")}>
-        <Menu.Button
-          className={cn(
-            "flex rounded px-6 py-1.5 duration-200  text-gray-700 justify-center"
-          )}
-        >
-          <AiOutlineUser className={cn("text-2xl")} />
-          <BiChevronDown className="mt-1 -ml-1 text-2xl" />
-        </Menu.Button>
-        <Menu.Items
-          className={cn(
-            "flex flex-col fixed w-56 right-[16px] top-[70px] bg-[#FFFFFF]  p-2  space-y-1.5 rounded shadow z-50"
-          )}
-        >
-          <Menu.Item>
-            {({ active }) => (
-              <Link
-                to="/login"
-                className={cn(
-                  "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
-                  active && "bg-[#FAFAFA]"
+        {({ open }) => (
+          <>
+            <Menu.Button
+              className={cn(
+                "flex rounded px-3 py-1.5 duration-200  text-gray-700 justify-center hover:bg-blue-800 hover:text-white",
+                open && "bg-blue-800 text-white"
+              )}
+            >
+              <AiOutlineUser className={cn("text-2xl")} />
+              <BiChevronDown className="mt-1 -ml-1 text-2xl" />
+            </Menu.Button>
+            <Menu.Items
+              className={cn(
+                "flex flex-col fixed w-56 right-[16px] top-[70px] bg-[#FFFFFF] space-y-1.5 rounded shadow z-50 p-1"
+              )}
+            >
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to="/wishlist"
+                    className={cn(
+                      "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
+                      active && "bg-[#FAFAFA]"
+                    )}
+                  >
+                    <AiOutlineHeart
+                      className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
+                    />
+                    WishList
+                  </Link>
                 )}
-              >
-                <AiOutlineShoppingCart
-                  className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
-                />
-                My Cart
-              </Link>
-            )}
-          </Menu.Item>
-
-          <Menu.Item>
-            {({ active }) => (
-              <Link
-                to="/profile"
-                className={cn(
-                  "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
-                  active && "bg-[#FAFAFA]"
-                )}
-              >
-                <AiOutlineUser
-                  className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
-                />
-                My Profile
-              </Link>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <button
-                className={cn(
-                  "w-full px-4   text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center text-gray-700",
-                  active && "bg-[#FAFAFA]"
-                )}
-                onClick={handleLogout}
-              >
-                <LuLogOut className={cn("mr-2 text-[calc(12px+0.390625vw)]")} />
-                Logout
-              </button>
-            )}
-          </Menu.Item>
-        </Menu.Items>
+              </Menu.Item>
+              {isUserLoggedIn ? (
+                <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/profile"
+                        className={cn(
+                          "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
+                          active && "bg-[#FAFAFA]"
+                        )}
+                      >
+                        <AiOutlineUser
+                          className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
+                        />
+                        My Profile
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={cn(
+                          "w-full px-4   text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center text-gray-700",
+                          active && "bg-[#FAFAFA]"
+                        )}
+                        onClick={handleLogout}
+                      >
+                        <LuLogOut
+                          className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
+                        />
+                        Logout
+                      </button>
+                    )}
+                  </Menu.Item>
+                </>
+              ) : (
+                <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/login"
+                        className={cn(
+                          "w-full px-4  text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center text-gray-700",
+                          active && "bg-[#FAFAFA]"
+                        )}
+                        onClick={handleLogout}
+                      >
+                        <LuLogIn
+                          className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
+                        />
+                        Login
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </>
+              )}
+            </Menu.Items>
+          </>
+        )}
       </Menu>
     </div>
   );
