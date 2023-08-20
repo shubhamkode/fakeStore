@@ -9,8 +9,4 @@ export interface Product {
     rate: number;
     count: number;
   };
-  others: {
-    cartQuantity: number;
-    isWhislisted: boolean;
-  };
 }

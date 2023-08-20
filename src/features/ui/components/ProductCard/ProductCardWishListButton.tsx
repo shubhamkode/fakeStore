@@ -1,35 +1,25 @@
 import React from "react";
 import { cn } from "tailwind-cn";
-
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+
 import { useProductCardContext } from "./useProductCardContext";
+import { useWishList } from "@/hooks/useWishList";
 
-interface IProductWishListButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {}
-
-const ProductCardWishListButton: React.FC<IProductWishListButtonProps> = ({
-  className,
-  ...rest
-}) => {
-  const { others } = useProductCardContext();
-
-  const isProductInWishList = others.isWhislisted;
+const ProductCardWishListButton: React.FC = () => {
+  const { id } = useProductCardContext();
+  const { isProductInWishList, updateWishList } = useWishList(id);
 
   return (
     <button
-      {...rest}
       className={cn(
-        className,
-        "absolute right-3 top-2 text-lg  p-2 rounded-full  shadow-lg "
+        "absolute right-3 top-2 text-lg  p-2 rounded-full  shadow-lg z-20 bg-white/40 "
       )}
+      onClick={updateWishList}
     >
       {!isProductInWishList ? (
         <AiOutlineHeart />
       ) : (
-        <AiFillHeart className="text-yellow-400 " />
+        <AiFillHeart className="text-pink-500 " />
       )}
     </button>
   );

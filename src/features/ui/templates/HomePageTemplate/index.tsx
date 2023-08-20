@@ -3,15 +3,10 @@ import { useDispatch } from "react-redux";
 import { cn } from "tailwind-cn";
 
 import { Category } from "@/models/Category";
-import {
-  addProductToWishList,
-  removeProductFromWishList,
-} from "@/store/productSlice";
 import { updateCategory } from "@/store/categorySlice";
 import { Product } from "@/models/Product";
 import { ProductCard } from "@/ui/components";
 import { Link } from "react-router-dom";
-
 
 interface IHomePageTemplate {
   products: Product[];
@@ -35,15 +30,7 @@ const HomePageTemplate: React.FC<IHomePageTemplate> = ({
       <div className="flex flex-wrap items-center justify-center w-full gap-1 py-4">
         {products.map((product) => (
           <ProductCard.Card key={product.id} product={product}>
-            <ProductCard.WishListButton
-              onClick={() => {
-                if (!product.others.isWhislisted) {
-                  dispatch(addProductToWishList(product.id));
-                } else {
-                  dispatch(removeProductFromWishList(product.id));
-                }
-              }}
-            />
+            <ProductCard.WishListButton />
             <Link to={`/product/${product.id}`}>
               <ProductCard.Image />
               <div className="pl-2">

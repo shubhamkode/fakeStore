@@ -12,19 +12,19 @@ export const storeApi = createApi({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
 
-        const updatedProductList: Product[] = [];
+        // const updatedProductList: Product[] = [];
 
-        data.forEach(
-          (product, index) => {
-            updatedProductList.push({
-              ...product,
-              id: index,
-              others: { isWhislisted: false, cartQuantity: 0 },
-            });
-          }
-        );
+        // data.forEach(
+        //   (product, index) => {
+        //     updatedProductList.push({
+        //       ...product,
+        //       id: index,
+        //       others: { isWhislisted: false, cartQuantity: 0 },
+        //     });
+        //   }
+        // );
 
-        dispatch(loadProducts(updatedProductList));
+        dispatch(loadProducts(data));
       },
     }),
 

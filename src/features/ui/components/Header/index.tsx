@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { logout } from "@/store/authSlice";
-import { resetCart } from "@/store/productSlice";
-import { resetCategory } from "@/store/categorySlice";
-
-import { AiOutlineHeart, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { cn } from "tailwind-cn";
 import { LuLogOut, LuLogIn } from "react-icons/lu";
-
 import { Menu } from "@headlessui/react";
 import { BiChevronDown } from "react-icons/bi";
+
+import { RootState } from "@/store";
+import { logout } from "@/store/authSlice";
+import { resetCategory } from "@/store/categorySlice";
+import { resetCart } from "@/store/cartSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -27,10 +30,10 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between px-5 py-3 bg-white ">
       <Link to="/" className=" font-[600] p-0.5 text-[calc(20px+0.390625vw)]">
-        FakeStore
+        fakeStore
       </Link>
-      <div className="flex items-center px-2 space-x-2">
-        <Link to="/cart" className="p-1.5">
+      <div className={cn("flex items-center px-2 space-x-1")}>
+        <Link to="/cart" className={cn("p-1.5 rounded px-4")}>
           <AiOutlineShoppingCart className="text-2xl " />
         </Link>
         <MobileMenu
@@ -67,24 +70,24 @@ function MobileMenu({ handleLogout, isUserLoggedIn }: IMobileMenuProps) {
                 "flex flex-col fixed w-56 right-[16px] top-[70px] bg-[#FFFFFF] space-y-1.5 rounded shadow z-50 p-1"
               )}
             >
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    to="/wishlist"
-                    className={cn(
-                      "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
-                      active && "bg-[#FAFAFA]"
-                    )}
-                  >
-                    <AiOutlineHeart
-                      className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
-                    />
-                    WishList
-                  </Link>
-                )}
-              </Menu.Item>
               {isUserLoggedIn ? (
                 <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/wishlist"
+                        className={cn(
+                          "w-full px-4 text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center shadow-sm text-gray-700",
+                          active && "bg-[#FAFAFA]"
+                        )}
+                      >
+                        <AiOutlineHeart
+                          className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
+                        />
+                        My WishList
+                      </Link>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <Link
@@ -103,7 +106,8 @@ function MobileMenu({ handleLogout, isUserLoggedIn }: IMobileMenuProps) {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <button
+                      <Link
+                        to="/"
                         className={cn(
                           "w-full px-4   text-[calc(12px+0.390625vw)] rounded py-1.5 font-[500] flex items-center text-gray-700",
                           active && "bg-[#FAFAFA]"
@@ -114,7 +118,7 @@ function MobileMenu({ handleLogout, isUserLoggedIn }: IMobileMenuProps) {
                           className={cn("mr-2 text-[calc(12px+0.390625vw)]")}
                         />
                         Logout
-                      </button>
+                      </Link>
                     )}
                   </Menu.Item>
                 </>

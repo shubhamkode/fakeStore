@@ -1,4 +1,3 @@
-import ProductCardButton from "./ProductCardButton";
 import ProductCardImage from "./ProductCardImage";
 import ProductCardTitle from "./ProductCardTitle";
 import ProductCardRatings from "./ProductCardRatings";
@@ -12,7 +11,6 @@ const ProductCard = {
   Title: ProductCardTitle,
   Ratings: ProductCardRatings,
   Price: ProductCardPrice,
-  Button: ProductCardButton,
   WishListButton: ProductCardWishListButton,
 };
 

@@ -20,7 +20,7 @@ const wishListSlice = createSlice({
         (productId) => productId === action.payload.productId
       );
       if (productExists) {
-        state.productIds.filter(
+        state.productIds = state.productIds.filter(
           (productId) => productId !== action.payload.productId
         );
       } else {
