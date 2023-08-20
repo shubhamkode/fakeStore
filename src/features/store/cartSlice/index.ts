@@ -4,8 +4,10 @@ interface InitialState {
   cartProducts: { productId: number; quantity: number }[];
 }
 
+const cartProducts = JSON.parse(localStorage.getItem("cart") || "[]");
+
 const initialState: InitialState = {
-  cartProducts: [],
+  cartProducts,
 };
 
 const cartSlice = createSlice({
@@ -17,6 +19,7 @@ const cartSlice = createSlice({
         productId: action.payload.productId,
         quantity: 1,
       });
+      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
     removeProductFromCart: (
       state,
@@ -25,6 +28,8 @@ const cartSlice = createSlice({
       state.cartProducts = state.cartProducts.filter(
         (product) => product.productId !== action.payload.productId
       );
+
+      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
 
     increaseProductInCart: (
@@ -39,6 +44,7 @@ const cartSlice = createSlice({
         currentProduct.quantity++;
       }
 
+      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
       return state;
     },
     decreaseProductInCart: (
@@ -58,11 +64,13 @@ const cartSlice = createSlice({
           );
         }
       }
+      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
 
       return state;
     },
     resetCart: (state) => {
       state.cartProducts = [];
+      localStorage.removeItem("cart");
     },
   },
 });

@@ -11,8 +11,8 @@ import cartSlice from "./cartSlice";
 const store = configureStore({
   reducer: {
     [storeApi.reducerPath]: storeApi.reducer,
-    category: categorySlice,
-    products: productSlice,
+    [categorySlice.name]: categorySlice.reducer,
+    [productSlice.name]: productSlice.reducer,
     [authSlice.name]: authSlice.reducer,
     [cartSlice.name]: cartSlice.reducer,
     [wishListSlice.name]: wishListSlice.reducer,

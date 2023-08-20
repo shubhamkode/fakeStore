@@ -4,8 +4,10 @@ interface InitialState {
   productIds: number[];
 }
 
+const productIds = JSON.parse(localStorage.getItem("wishList") ?? "[]");
+
 const initialState: InitialState = {
-  productIds: [],
+  productIds,
 };
 
 const wishListSlice = createSlice({
@@ -26,10 +28,15 @@ const wishListSlice = createSlice({
       } else {
         state.productIds.push(action.payload.productId);
       }
+      localStorage.setItem("wishList", JSON.stringify(state.productIds));
+    },
+    clearWishList: (state) => {
+      state.productIds = [];
+      localStorage.removeItem("wishList");
     },
   },
 });
 
 export default wishListSlice;
 
-export const { toggleProductinWishList } = wishListSlice.actions;
+export const { toggleProductinWishList, clearWishList } = wishListSlice.actions;

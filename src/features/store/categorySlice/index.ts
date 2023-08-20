@@ -7,15 +7,17 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  categories: [],
+  categories: [{ name: "All", selected: true }],
 };
 
 const categorySlice = createSlice({
-  name: "categorySlice",
+  name: "category",
   initialState,
   reducers: {
-    loadCategory: (state, action: PayloadAction<Category[]>) => {
-      state.categories = action.payload;
+    loadCategory: (state, action: PayloadAction<string[]>) => {
+      action.payload.forEach((category)=>{
+        state.categories.push({name: category,selected: false})
+      })
     },
     updateCategory: (state, action: PayloadAction<string>) => {
       state.categories.map((category) => {
@@ -38,6 +40,7 @@ const categorySlice = createSlice({
   },
 });
 
-export default categorySlice.reducer;
+export default categorySlice;
 
-export const { updateCategory, loadCategory ,resetCategory} = categorySlice.actions;
+export const { updateCategory, loadCategory, resetCategory } =
+  categorySlice.actions;

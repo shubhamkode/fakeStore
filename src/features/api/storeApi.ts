@@ -2,28 +2,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Product } from "@/models/Product";
 import { loadCategory } from "@/store/categorySlice";
 import { loadProducts } from "@/store/productSlice";
+import { login } from "@/store/authSlice";
 
 export const storeApi = createApi({
   reducerPath: "/storeApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://fakestoreapi.com" }),
   endpoints: (builder) => ({
-    getAllProducts: builder.query<Omit<Product, "others">[], null>({
+    getAllProducts: builder.query<Product[], null>({
       query: () => ({ url: "/products" }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
-
-        // const updatedProductList: Product[] = [];
-
-        // data.forEach(
-        //   (product, index) => {
-        //     updatedProductList.push({
-        //       ...product,
-        //       id: index,
-        //       others: { isWhislisted: false, cartQuantity: 0 },
-        //     });
-        //   }
-        // );
-
         dispatch(loadProducts(data));
       },
     }),
@@ -32,14 +20,28 @@ export const storeApi = createApi({
       query: () => ({ url: "/products/categories" }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
-        const updatedCategoriesList = [{ name: "All", selected: true }];
-        data.map((category) => {
-          updatedCategoriesList.push({ name: category, selected: false });
-        });
-        dispatch(loadCategory(updatedCategoriesList));
+        dispatch(loadCategory(data));
+      },
+    }),
+    login: builder.mutation<
+      { token: string },
+      { username: string; password: string }
+    >({
+      query: (formData) => ({
+        url: "/auth/login",
+        body: { ...formData },
+        method: "POST",
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled;
+        dispatch(login(data));
       },
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetAllCategoriesQuery } = storeApi;
+export const {
+  useGetAllProductsQuery,
+  useGetAllCategoriesQuery,
+  useLoginMutation,
+} = storeApi;

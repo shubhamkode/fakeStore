@@ -20,7 +20,7 @@ const ProductInfoPageTemplate: React.FC<IProductInfoPageTemplateProps> = ({
   return (
     <div className="w-full p-2">
       <div className=" max-w-[1440px] mx-auto p-2 space-y-1 md:space-y-0 bg-white rounded shadow sm:flex sm:space-x-5">
-        <div className="relative max-w-[550px]  sm:pb-7">
+        <div className="relative max-w-[550px] sm:pb-7 pl-2">
           <img
             src={product.image}
             alt={`image of Prouct ${product.id}`}

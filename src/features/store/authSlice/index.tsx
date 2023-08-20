@@ -4,7 +4,9 @@ interface InitialState {
   token?: string | null;
 }
 
-const initialState: InitialState = { token: null };
+const token = localStorage.getItem("token");
+
+const initialState: InitialState = { token };
 
 const authSlice = createSlice({
   name: "auth",
@@ -12,9 +14,11 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<{ token: string }>) => {
       state.token = action.payload.token;
+      localStorage.setItem("token", state.token);
     },
     logout(state) {
-      state.token = initialState.token;
+      state.token = null;
+      localStorage.removeItem("token");
     },
   },
 });

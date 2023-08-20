@@ -11,8 +11,8 @@ const Form = ({ children, className, ...rest }: IFormProps) => {
     <form
       className={cn(
         className,
-        "max-w-[400px] min-w-[350px] mx-auto",
-        "mt-[3vh] space-y-3 bg-gray-200/30 rounded p-4  backdrop-blur-sm ring-2 ring-blue-800/30 shadow-2xl "
+        "max-w-[600px] w-full",
+        "space-y-2 rounded p-4 px-2 h-min"
       )}
       {...rest}
     >

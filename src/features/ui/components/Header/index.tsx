@@ -12,8 +12,8 @@ import { BiChevronDown } from "react-icons/bi";
 
 import { RootState } from "@/store";
 import { logout } from "@/store/authSlice";
-import { resetCategory } from "@/store/categorySlice";
 import { resetCart } from "@/store/cartSlice";
+import { clearWishList } from "@/store/wishListSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -23,8 +23,8 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(resetCart());
-    dispatch(resetCategory());
     dispatch(logout());
+    dispatch(clearWishList());
   };
 
   return (

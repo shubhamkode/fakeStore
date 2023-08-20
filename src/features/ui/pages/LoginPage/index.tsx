@@ -1,19 +1,22 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { RootState } from "@/store";
 import { LoginPageTemplate } from "@/ui/templates";
-import { login } from "@/store/authSlice";
+
+import { useLoginMutation } from "@/api/storeApi";
 
 const LoginPage = () => {
   const { token } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
 
   React.useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/", { replace: true });
     }
   }, [token, navigate]);
 
@@ -21,7 +24,6 @@ const LoginPage = () => {
     username: string;
     password: string;
   }>({ username: "", password: "" });
-
 
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -32,17 +34,7 @@ const LoginPage = () => {
     if (!formData.password || !formData.username) {
       alert("All fields Required");
     }
-    const jsonResponse = await fetch("https://fakestoreapi.com/auth/login", {
-      body: JSON.stringify({ ...formData }),
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    }).then((res) => res.json());
-
-    if (jsonResponse) {
-      const requiredResponse = jsonResponse as { token: string };
-      dispatch(login({ ...requiredResponse }));
-    }
-
+    await login({ ...formData });
     setFormData({ username: "", password: "" });
   };
 
@@ -51,6 +43,7 @@ const LoginPage = () => {
       formData={formData}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
+      isLoading={isLoading}
     />
   );
 };
