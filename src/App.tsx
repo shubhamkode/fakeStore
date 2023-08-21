@@ -1,6 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
-import { CartPage, HomePage, LoginPage, ProductInfoPage } from "@/ui/pages";
+import {
+  CartPage,
+  HomePage,
+  LoginPage,
+  ProductInfoPage,
+  WishListPage,
+  ProfilePage,
+} from "@/ui/pages";
 import { Page } from "@/ui/components";
 import { Provider as WrapBalancerProvider } from "react-wrap-balancer";
 
@@ -21,6 +28,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/product/:id" element={<ProductInfoPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/wishList" element={<WishListPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Page>
     </WrapBalancerProvider>

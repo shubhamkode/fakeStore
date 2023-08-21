@@ -54,7 +54,7 @@ const ProductTile: React.FC<{
         <div>
           <Link
             to={`/product/${product.id}`}
-            className="leading-5 font-[500] line-clamp-2"
+            className="leading-5 font-[500] line-clamp-2 "
           >
             {product.title}
           </Link>

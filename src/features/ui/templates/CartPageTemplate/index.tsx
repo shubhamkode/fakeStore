@@ -65,7 +65,7 @@ const ItemsInCart = ({ cartProducts }: { cartProducts: Product[] }) => {
   return (
     <div className="flex flex-col py-2 lg:flex-row">
       <div className="w-full px-3 mx-auto mt-5 ">
-        <div className="w-full border divide-y-2 rounded-sm shadow bg-">
+        <div className="w-full border divide-y-2 rounded-sm shadow max-w-[700px] mx-auto">
           {cartProducts.map((cartProduct) => (
             <ProductTile product={cartProduct} key={cartProduct.id} />
           ))}

@@ -15,6 +15,7 @@ const ProductInfoPage = () => {
 
   if (currentProduct)
     return <ProductInfoPageTemplate product={currentProduct} />;
+  return null;
 };
 
 export default ProductInfoPage;

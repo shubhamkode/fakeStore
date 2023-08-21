@@ -18,6 +18,7 @@ import { clearWishList } from "@/store/wishListSlice";
 export default function Header() {
   const dispatch = useDispatch();
   const { token } = useSelector((store: RootState) => store.auth);
+  const { cartProducts } = useSelector((store: RootState) => store.cart);
 
   const isUserLoggedIn: boolean = !!token;
 
@@ -33,8 +34,11 @@ export default function Header() {
         fakeStore
       </Link>
       <div className={cn("flex items-center px-2 space-x-1")}>
-        <Link to="/cart" className={cn("p-1.5 rounded px-4")}>
+        <Link to="/cart" className={cn("p-1.5 rounded px-4 relative")}>
           <AiOutlineShoppingCart className="text-2xl " />
+          <p className="absolute -top-1 right-0 bg-red-400 text-white text-sm font-[600] rounded-full py-0.5 px-2">
+            {cartProducts.length}
+          </p>{" "}
         </Link>
         <MobileMenu
           handleLogout={handleLogout}

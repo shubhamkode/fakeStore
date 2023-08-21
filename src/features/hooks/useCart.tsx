@@ -12,9 +12,8 @@ export const useCart = (productId: number) => {
 
   const { cartProducts } = useSelector((store: RootState) => store.cart);
 
-  const productInCart = cartProducts.find(
-    (cartProduct) => cartProduct.productId === productId
-  );
+  const productInCart = () =>
+    cartProducts.find((cartProduct) => cartProduct.productId === productId);
 
   const increaseQuantity = () => dispatch(increaseProductInCart({ productId }));
 
@@ -25,11 +24,11 @@ export const useCart = (productId: number) => {
   const addToCart = () => dispatch(addProductToCart({ productId }));
 
   return {
-    isProductInCart: !!productInCart,
+    isProductInCart: !!productInCart(),
     increaseQuantity,
     decreaseQuantity,
     removeProduct,
     addToCart,
-    cartQuantity: productInCart? productInCart.quantity:0 ,
+    cartQuantity: productInCart ? productInCart()?.quantity : 0,
   };
 };

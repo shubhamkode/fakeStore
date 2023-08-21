@@ -24,15 +24,14 @@ This is a side project created for learning various technologies such as:-
 <h3 id="installation" >Installation</h3>
 
 ```bash
-git clone ""
-pnpm install
+git clone https://github.com/shubhamkode/fakeStore.git
+cd fakeStore && pnpm install
 pnpm run dev
 ```
 
 <h3 id="status" >Status</h3>
 
 > In Progress
-
 
 <h3 id="credits">Credits </h3>
 
