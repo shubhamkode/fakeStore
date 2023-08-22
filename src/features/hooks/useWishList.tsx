@@ -3,7 +3,7 @@ import { RootState } from "@/store";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleProductinWishList } from "@/store/wishListSlice";
 
-export const useWishList = (productId: number) => {
+export const useWishList = (productId: string) => {
   const dispatch = useDispatch();
 
   const { productIds } = useSelector((store: RootState) => store.wishlist);

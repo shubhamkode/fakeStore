@@ -37,7 +37,7 @@ export default function Header() {
         <Link to="/cart" className={cn("p-1.5 rounded px-4 relative")}>
           <AiOutlineShoppingCart className="text-2xl " />
           <p className="absolute -top-1 right-0 bg-red-400 text-white text-sm font-[600] rounded-full py-0.5 px-2">
-            {cartProducts.length}
+            {Object.keys(cartProducts).length}
           </p>{" "}
         </Link>
         <MobileMenu

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Product } from "@/models/Product";
+import { CartProduct } from "@/models/Product";
 import { ProductTile } from "@/ui/components";
 
 interface ICartPageTemplateProps {
-  cartProducts: Product[];
+  cartProducts: CartProduct[];
   isUserLoggedIn: boolean;
 }
 
@@ -60,7 +60,15 @@ const NoItemsInCart = ({ isUserLoggedIn }: { isUserLoggedIn: boolean }) => {
   );
 };
 
-const ItemsInCart = ({ cartProducts }: { cartProducts: Product[] }) => {
+const ItemsInCart = ({ cartProducts }: { cartProducts: CartProduct[] }) => {
+  const totalPrice = cartProducts.reduce(
+    (total, product) => total + product.price * product.cartQuantity,
+    0
+  );
+
+  const discount = 0;
+
+  const totalAmount = totalPrice - discount;
 
   return (
     <div className="flex flex-col py-2 lg:flex-row">
@@ -78,18 +86,20 @@ const ItemsInCart = ({ cartProducts }: { cartProducts: Product[] }) => {
               Price Details
             </h3>
             <div className="flex items-center justify-between mt-2">
-              <p className="text-sm font-[600] ">Price (3 Items):</p>{" "}
-              <p className="font-[700] text-lg">$38,888</p>
+              <p className="text-sm font-[600] ">
+                Price ({cartProducts.length}) Items):
+              </p>{" "}
+              <p className="font-[700] ">${totalPrice.toFixed(2)}</p>
             </div>
 
             <div className="flex items-center justify-between mt-0">
               <p className="text-sm font-[600] ">Discount: </p>{" "}
-              <p className="font-[700]">$0</p>
+              <p className="font-[700]">${discount.toFixed(2)}</p>
             </div>
 
-            <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center justify-between mt-3">
               <p className="text-sm font-[600] ">Total Amount: </p>{" "}
-              <p className="font-[700]">$38,888</p>
+              <p className="font-[700] text-lg">${totalAmount.toFixed(2)}</p>
             </div>
           </div>
 

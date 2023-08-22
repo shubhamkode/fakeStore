@@ -3,17 +3,21 @@ import { useSelector } from "react-redux";
 
 import { CartPageTemplate } from "@/ui/templates";
 import { RootState } from "@/store";
-import { Product } from "@/models/Product";
+import { CartProduct } from "@/models/Product";
 
 const CartPage = () => {
   const { products } = useSelector((store: RootState) => store.products);
   const { cartProducts } = useSelector((store: RootState) => store.cart);
   const { token } = useSelector((state: RootState) => state.auth);
 
-  const productsInCart: Product[] = [];
+  const productsInCart: CartProduct[] = [];
 
-  cartProducts.forEach((cartProduct) => {
-    productsInCart.push(products[cartProduct.productId - 1]);
+  Object.keys(cartProducts).map((productId) => {
+    productsInCart.push({
+      id: productId,
+      ...products[productId],
+      cartQuantity: cartProducts[productId],
+    });
   });
 
   return (

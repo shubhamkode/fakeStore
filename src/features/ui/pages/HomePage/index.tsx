@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 
 import { HomePageTemplate } from "@/ui/templates";
 import { RootState } from "@/store";
+import useProducts from "@/hooks/useProducts";
 
 const HomePage: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.category);
-  const { products } = useSelector((state: RootState) => state.products);
+  const { allProducts } = useProducts();
 
   const selectedCategory =
     categories.find((category) => {
@@ -15,14 +16,11 @@ const HomePage: React.FC = () => {
 
   const selectedProducts =
     selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+      ? allProducts
+      : allProducts.filter((product) => product.category === selectedCategory);
 
   return (
-    <HomePageTemplate
-      products={selectedProducts}
-      categories={categories}
-    />
+    <HomePageTemplate products={selectedProducts} categories={categories} />
   );
 };
 

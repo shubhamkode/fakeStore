@@ -9,13 +9,13 @@ const ProductInfoPage = () => {
 
   const { products } = useSelector((state: RootState) => state.products);
 
-  const currentProduct = products.find(
-    (product) => product.id == (id as unknown as number)
-  );
+  if (!id) {
+    return null;
+  }
 
-  if (currentProduct)
-    return <ProductInfoPageTemplate product={currentProduct} />;
-  return null;
+  const product = { id, ...products[id] };
+
+  return <ProductInfoPageTemplate product={product} />;
 };
 
 export default ProductInfoPage;

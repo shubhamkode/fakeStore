@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
-  productIds: number[];
+  productIds: string[];
 }
 
 const productIds = JSON.parse(localStorage.getItem("wishList") ?? "[]");
@@ -16,7 +16,7 @@ const wishListSlice = createSlice({
   reducers: {
     toggleProductinWishList: (
       state,
-      action: PayloadAction<{ productId: number }>
+      action: PayloadAction<{ productId: string }>
     ) => {
       const productExists = state.productIds.find(
         (productId) => productId === action.payload.productId

@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "@/models/Product";
 
 interface InitialState {
-  products: Product[];
+  products: { [id: string]: Omit<Product, "id"> };
 }
 
 const initialState: InitialState = {
-  products: [],
+  products: {},
 };
 
 const productSlice = createSlice({
@@ -15,54 +15,11 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     loadProducts: (state, action: PayloadAction<Product[]>) => {
-      state.products = action.payload;
+      action.payload.map((product) => {
+        const { id, ...newProduct } = product;
+        state.products[id] = { ...newProduct };
+      });
     },
-    // addProductToCart: (state, action: PayloadAction<number>) => {
-    //   const currentProduct = state.products.find(
-    //     (product) => product.id === action.payload
-    //   );
-
-    //   if (currentProduct && currentProduct.others.cartQuantity >= 0) {
-    //     // currentProduct.others.isWhislisted = false;
-    //     currentProduct.others.cartQuantity++;
-    //   }
-    //   return state;
-    // },
-    // removeProductFromCart: (state, action: PayloadAction<number>) => {
-    //   const currentProduct = state.products.find(
-    //     (product) => product.id === action.payload
-    //   );
-
-    //   if (currentProduct && currentProduct.others.cartQuantity >= 1) {
-    //     currentProduct.others.isWhislisted = false;
-    //     currentProduct.others.cartQuantity--;
-    //   }
-    //   return state;
-    // },
-    // addProductToWishList: (state, action: PayloadAction<number>) => {
-    //   const currentProduct = state.products.find(
-    //     (product) => product.id === action.payload
-    //   );
-    //   if (currentProduct) {
-    //     currentProduct.others = {
-    //       cartQuantity: 0,
-    //       isWhislisted: true,
-    //     };
-    //   }
-    //   return state;
-    // },
-    // removeProductFromWishList: (state, action: PayloadAction<number>) => {
-    //   const currentProduct = state.products.find(
-    //     (product) => product.id === action.payload
-    //   );
-    //   if (currentProduct) {
-    //     currentProduct.others.isWhislisted = false;
-    //   }
-    //   return state;
-    // },
-    // resetCart: (state) => {
-    //   state.products.map((product) => (product.others.cartQuantity = 0));
-    // },
   },
 });
 

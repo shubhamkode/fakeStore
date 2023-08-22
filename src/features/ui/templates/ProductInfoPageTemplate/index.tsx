@@ -65,7 +65,7 @@ const ProductInfoPageTemplate: React.FC<IProductInfoPageTemplateProps> = ({
           </div>
 
           <p className=" text-[calc(25px+0.39vw)] font-bold mt-2">
-            &#x24;{product.price.toFixed(1)}
+            &#x24;{product.price.toFixed(2)}
           </p>
 
           <p className="mt-4 text-[calc(13px+0.39vw)] sm:text-[calc(10px+0.39vw)] text-gray-500 leading-5">
@@ -85,7 +85,7 @@ const ProductInfoPageTemplate: React.FC<IProductInfoPageTemplateProps> = ({
 
 export default ProductInfoPageTemplate;
 
-const ClickToAction = ({ productId }: { productId: number }) => {
+const ClickToAction = ({ productId }: { productId: string }) => {
   const { isProductInCart, addToCart } = useCart(productId);
 
   return (

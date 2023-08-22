@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
-  cartProducts: { productId: number; quantity: number }[];
+  cartProducts: { [productId: string]: number };
 }
 
 const cartProducts = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -14,62 +14,51 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addProductToCart: (state, action: PayloadAction<{ productId: number }>) => {
-      state.cartProducts.push({
-        productId: action.payload.productId,
-        quantity: 1,
-      });
+    addProductToCart: (state, action: PayloadAction<{ productId: string }>) => {
+      state.cartProducts = {
+        ...state.cartProducts,
+        [action.payload.productId]: 1,
+      };
       localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
     removeProductFromCart: (
       state,
-      action: PayloadAction<{ productId: number }>
+      action: PayloadAction<{ productId: string }>
     ) => {
-      state.cartProducts = state.cartProducts.filter(
-        (product) => product.productId !== action.payload.productId
-      );
+      delete state.cartProducts[action.payload.productId];
 
       localStorage.setItem("cart", JSON.stringify(state.cartProducts));
     },
 
     increaseProductInCart: (
       state,
-      action: PayloadAction<{ productId: number }>
+      action: PayloadAction<{ productId: string }>
     ) => {
-      const currentProduct = state.cartProducts.find(
-        (cartProduct) => cartProduct.productId === action.payload.productId
-      );
-
-      if (currentProduct) {
-        currentProduct.quantity++;
+      const { productId } = action.payload;
+      const productExists = productId in state.cartProducts;
+      if (productExists) {
+        state.cartProducts[productId]++;
+        localStorage.setItem("cart", JSON.stringify(state.cartProducts));
       }
-
-      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
-      return state;
     },
     decreaseProductInCart: (
       state,
-      action: PayloadAction<{ productId: number }>
+      action: PayloadAction<{ productId: string }>
     ) => {
-      const currentProduct = state.cartProducts.find(
-        (cartProduct) => cartProduct.productId === action.payload.productId
-      );
+      const { productId } = action.payload;
+      const productExists = productId in state.cartProducts;
 
-      if (currentProduct) {
-        if (currentProduct.quantity >= 2) {
-          currentProduct.quantity--;
+      if (productExists) {
+        if (state.cartProducts[productId] >= 2) {
+          state.cartProducts[productId]--;
         } else {
-          state.cartProducts = state.cartProducts.filter(
-            (product) => product.productId !== action.payload.productId
-          );
+          delete state.cartProducts[productId];
         }
+        localStorage.setItem("cart", JSON.stringify(state.cartProducts));
       }
-      localStorage.setItem("cart", JSON.stringify(state.cartProducts));
-
-      return state;
     },
     resetCart: (state) => {
-      state.cartProducts = [];
+      state.cartProducts = {};
       localStorage.removeItem("cart");
     },
   },
